@@ -25,7 +25,7 @@ function searchPGByPhone(req, res) {
 }
 
 function searchPGByEmail(req, res) {
-  const email = req.swagger.params.email.value;
+  const email = req.swagger.params.emailAddy.value;
   pool.connect((err, client, done) => {
     if (err) throw err;
     client.query('SELECT * FROM CUSTOMERS WHERE email = $1', [email], (qerr, qres) => {
