@@ -9,6 +9,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "jsforce": "^1.9.1",
     "pg": "^7.8.1",
     "swagger-express-mw": "^0.1.0"
   },
