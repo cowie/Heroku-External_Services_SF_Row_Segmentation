@@ -25,23 +25,23 @@ function searchPGByPhone(req, res) {
         res.send(200);
       } else {
         console.log(qres.rows[0]);
-        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes){
-          if(sfLoginErr) {
+        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+          if (sfLoginErr) {
             console.error(sfLoginErr);
             res.json(sfLoginErr);
-          }else{
+          } else {
             conn.sobject('Contact').create({
               firstname: qres.rows[0].firstname,
               lastname: qres.rows[0].lastname
             }, (sfInsErr, sfInsRet) => {
-              if(sfInsErr){
+              if (sfInsErr) {
                 console.error(sfInsErr);
                 res.json(sfInsErr);
               }else{
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
                 res.json(sfInsRet.id);
               }
-            })
+            });
           }
         });
       }
