@@ -37,7 +37,7 @@ function searchPGByPhone(req, res) {
               if (sfInsErr) {
                 console.error(sfInsErr);
                 res.json(sfInsErr);
-              }else{
+              } else {
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
                 res.json(sfInsRet.id);
               }
@@ -60,7 +60,7 @@ function searchPGByEmail(req, res) {
         res.json(qerr.message);
       } else {
         console.log(qres.rows[0]);
-        res.json(qres.rows[0]);
+        res.json(qres.rows[0].email);
       }
     });
   }); 
