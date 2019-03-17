@@ -60,7 +60,26 @@ function searchPGByEmail(req, res) {
         res.json(qerr.message);
       } else {
         console.log(qres.rows[0]);
-        res.json(qres.rows[0].email);
+        //res.json(qres.rows[0].email);
+        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+          if (sfLoginErr) {
+            console.error(sfLoginErr);
+            res.json(sfLoginErr);
+          } else {
+            conn.sobject('Contact').create({
+              firstname: qres.rows[0].firstname,
+              lastname: qres.rows[0].lastname,
+              email: qres.rows[0].email,
+              phone: qres.rows[0].phone,
+            }, (sfInsErr, sfInsRet) => {
+              if (sfInsErr) {
+                console.error(sfInsErr);
+                res.json(sfInsErr);
+              } else {
+                console.log(`Created SF Record id: ${sfInsRet.id}`);
+                res.json(sfInsRet.id);
+              }
+            });
       }
     });
   }); 
