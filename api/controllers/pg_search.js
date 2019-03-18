@@ -14,6 +14,7 @@ const conn = new jsforce.Connection({
   loginUrl: 'https://test.salesforce.com',
 });
 
+//todo complete implementation
 function searchPGByPhone(req, res) {
   const phoneNum = req.swagger.params.phoneNum.value;
   pool.connect((err, client, done) => {
@@ -53,7 +54,11 @@ function searchPGByEmail(req, res) {
   console.log('entering search module');
   const email = req.swagger.params.emailAddy.value;
   pool.connect((err, client, done) => {
-    if (err) throw err;
+    if (err) {
+      //throw err;
+      console.error(err);
+      res.send(503);
+    }
     console.log('connected to pool');
     client.query('SELECT * FROM CUSTOMERS WHERE email = $1', [email], (qerr, qres) => {
       done();
