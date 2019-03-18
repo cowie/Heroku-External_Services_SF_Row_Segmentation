@@ -28,11 +28,7 @@ paths:
         200: 
             description: Customer found in master and inserted into Salesforce. Returning SFID.
             schema:
-              type: object
-              properties:
-                SFID: 
-                  type: string
-                  description: The SF Contact ID for the newly inserted record.
+              $ref: "#/definitions/SuccessResponse"
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
           schema:
@@ -86,6 +82,12 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 definitions:
+  SuccessResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
   ErrorResponse:
     required:
       - message
