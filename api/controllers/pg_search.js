@@ -64,32 +64,36 @@ function searchPGByEmail(req, res) {
       done();
       if (err) {
         console.log(qerr.stack);
-        res.json(qerr.message);
-      } else {
-        console.log(`query successful: ${qres.rows[0]}`);
-        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
-          if (sfLoginErr) {
-            console.log('something blew up at sf login');
-            console.error(sfLoginErr);
-            res.json(sfLoginErr);
-          } else {
-            console.log('sf login successful');
-            conn.sobject('Contact').create({
-              firstname: qres.rows[0].firstname,
-              lastname: qres.rows[0].lastname,
-              email: qres.rows[0].email,
-              phone: qres.rows[0].phone,
-            }, (sfInsErr, sfInsRet) => {
-              if (sfInsErr) {
-                console.error(sfInsErr);
-                res.json(sfInsErr);
-              } else {
-                console.log(`Created SF Record id: ${sfInsRet.id}`);
-                res.json(sfInsRet.id);
-              }
-            });
-          }
-        });
+        res.send(503);
+      } else if (qres.length == 0) {
+          console.log('no records found');
+          res.send(404);
+      } else { 
+          console.log(`query successful: ${qres.rows[0]}`);
+          conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+            if (sfLoginErr) {
+              console.log('something blew up at sf login');
+              console.error(sfLoginErr);
+              res.send(503);
+            } else {
+              console.log('sf login successful');
+              conn.sobject('Contact').create({
+                firstname: qres.rows[0].firstname,
+                lastname: qres.rows[0].lastname,
+                email: qres.rows[0].email,
+                phone: qres.rows[0].phone,
+              }, (sfInsErr, sfInsRet) => {
+                if (sfInsErr) {
+                  console.error(sfInsErr);
+                  res.send(503);
+                } else {
+                  console.log(`Created SF Record id: ${sfInsRet.id}`);
+                  res.json(sfInsRet.id);
+                }
+              });
+            }
+         });
+      }
       }
     });
   });
