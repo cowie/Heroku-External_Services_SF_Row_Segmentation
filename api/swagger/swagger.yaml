@@ -24,23 +24,31 @@ paths:
           in: query
           required: true
           type: string
-      responses:
-        "200": 
-          description: Customer found in master and inserted into Salesforce. Returning SFID.
-          schema:
-            type: object
-            properties:
-              SFID: 
-                type: string
-                description: The SF Contact ID for the newly inserted record.
-        "401":
+      responses: 
+        200: 
+            description: Customer found in master and inserted into Salesforce. Returning SFID.
+            schema:
+              type: object
+              properties:
+                SFID: 
+                  type: string
+                  description: The SF Contact ID for the newly inserted record.
+        401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
-        "404": 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404: 
           description: Customer not found in database.
-        "503": 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503: 
           description: Error connecting to Master database.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         default:
           description: Uncaught error. Stuff done gone wrong.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /searchPhoneNumber:
     x-swagger-router-controller: pg_search
     get: 
@@ -63,12 +71,24 @@ paths:
                   description: The SF Contact ID for the newly inserted record.
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         404: 
           description: Customer not found in database.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         503: 
           description: Error connecting to Master database.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         default:
           description: Uncaught error. Stuff done gone wrong.
-          schema: 
-            type: string
-            description: error message
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+definitions:
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
