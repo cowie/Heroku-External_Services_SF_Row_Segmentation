@@ -91,9 +91,9 @@ function searchPGByEmail(req, res) {
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
                 res.json(sfInsRet.id);
               }
-            }).catch(error){
+            }).catch((error) => {
               res.status(503).json('Error inserting');
-            };
+            });
           }
         });
       }
