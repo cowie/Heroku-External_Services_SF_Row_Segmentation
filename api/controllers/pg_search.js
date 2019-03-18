@@ -71,34 +71,31 @@ function searchPGByEmail(req, res) {
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
         //adding a try catch because jsforce dies if there's an issue
-        try{
-          conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
-            if (sfLoginErr) {
-              console.log('something blew up at sf login');
-              console.error(sfLoginErr);
-              res.status(503).json('SF Login Failure');
-            } else {
-              console.log('sf login successful');
-              conn.sobject('Contact').create({
-                firstname: qres.rows[0].firstname,
-                lastname: qres.rows[0].lastname,
-                email: qres.rows[0].email,
-                phone: qres.rows[0].phone,
-              }, (sfInsErr, sfInsRet) => {
-                if (sfInsErr) {
-                  console.error(sfInsErr);
-                  res.status(503).send('SF insert failure');
-                } else {
-                  console.log(`Created SF Record id: ${sfInsRet.id}`);
-                  res.json(sfInsRet.id);
-                }
-              });
-            }
-          });
-        }
-        catch(error){
-          res.status(503).json('Error inserting records into Salesforce');
-        }
+        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+          if (sfLoginErr) {
+            console.log('something blew up at sf login');
+            console.error(sfLoginErr);
+            res.status(503).json('SF Login Failure');
+          } else {
+            console.log('sf login successful');
+            conn.sobject('Contact').create({
+              firstname: qres.rows[0].firstname,
+              lastname: qres.rows[0].lastname,
+              email: qres.rows[0].email,
+              phone: qres.rows[0].phone,
+            }, (sfInsErr, sfInsRet) => {
+              if (sfInsErr) {
+                console.error(sfInsErr);
+                res.status(503).send('SF insert failure');
+              } else {
+                console.log(`Created SF Record id: ${sfInsRet.id}`);
+                res.json(sfInsRet.id);
+              }
+            }).catch(error){
+              res.status(503).json('Error inserting');
+            };
+          }
+        });
       }
     });
   });
