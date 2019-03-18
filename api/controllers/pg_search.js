@@ -57,24 +57,24 @@ function searchPGByEmail(req, res) {
     if (err) {
       //throw err;
       console.error(err);
-      res.send(503);
+      res.send(503).send('Error connecting to Pool');
     }
     console.log('connected to pool');
     client.query('SELECT * FROM CUSTOMERS WHERE email = $1', [email], (qerr, qres) => {
       done();
       if (err) {
         console.log(qerr.stack);
-        res.sendStatus(503);
+        res.sendStatus(503).send('Error querying Master table');
       } else if (qres.rows.length < 1) {
         console.log('no records found');
-        res.sendStatus(404);
+        res.sendStatus(404).send('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
             console.error(sfLoginErr);
-            res.sendStatus(503);
+            res.sendStatus(503).send('SF Login Failure');
           } else {
             console.log('sf login successful');
             conn.sobject('Contact').create({
@@ -85,7 +85,7 @@ function searchPGByEmail(req, res) {
             }, (sfInsErr, sfInsRet) => {
               if (sfInsErr) {
                 console.error(sfInsErr);
-                res.sendStatus(503);
+                res.sendStatus(503).send('SF insert failure');
               } else {
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
                 res.json(sfInsRet.id);
