@@ -65,7 +65,7 @@ function searchPGByEmail(req, res) {
       if (err) {
         console.log(qerr.stack);
         res.send(503);
-      } else if (qres.length == 0) {
+      } else if (qres.rows.length < 1) {
         console.log('no records found');
         res.send(404);
       } else {
