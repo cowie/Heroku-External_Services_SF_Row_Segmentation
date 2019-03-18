@@ -83,9 +83,11 @@ function searchPGByEmail(req, res) {
                 res.json(sfInsRet.id);
               }
             });
+          }
+        });
       }
     });
-  }); 
+  });
 }
 
 module.exports = {
