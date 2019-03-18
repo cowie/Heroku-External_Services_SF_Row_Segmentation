@@ -9,10 +9,8 @@ schemes:
   - https
 consumes:
   - application/json
-  - application/xml
 produces:
   - application/json
-  - application/xml
 paths: 
   /searchEmail:
     x-swagger-router-controller: pg_search
@@ -27,7 +25,7 @@ paths:
           required: true
           type: string
       responses:
-        200: 
+        "200": 
           description: Customer found in master and inserted into Salesforce. Returning SFID.
           schema:
             type: object
@@ -35,11 +33,11 @@ paths:
               SFID: 
                 type: string
                 description: The SF Contact ID for the newly inserted record.
-        401:
+        "401":
           description: Error authenticating to Salesforce for insert. Customer found successfully.
-        404: 
+        "404": 
           description: Customer not found in database.
-        503: 
+        "503": 
           description: Error connecting to Master database.
         default:
           description: Uncaught error. Stuff done gone wrong.
