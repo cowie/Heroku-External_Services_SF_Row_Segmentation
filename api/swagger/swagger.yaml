@@ -35,7 +35,6 @@ paths:
               SFID: 
                 type: string
                 description: The SF Contact ID for the newly inserted record.
-              
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
         404: 
@@ -64,22 +63,12 @@ paths:
                 SFID: 
                   type: string
                   description: The SF Contact ID for the newly inserted record.
-                
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
-          schema: 
-            type: string
-            description: error message
         404: 
           description: Customer not found in database.
-          schema: 
-            type: string
-            description: error message
         503: 
           description: Error connecting to Master database.
-          schema: 
-            type: string
-            description: error message
         default:
           description: Uncaught error. Stuff done gone wrong.
           schema: 
