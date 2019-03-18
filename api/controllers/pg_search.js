@@ -50,22 +50,25 @@ function searchPGByPhone(req, res) {
 }
 
 function searchPGByEmail(req, res) {
+  console.log('entering search module');
   const email = req.swagger.params.emailAddy.value;
   pool.connect((err, client, done) => {
     if (err) throw err;
+    console.log('connected to pool');
     client.query('SELECT * FROM CUSTOMERS WHERE email = $1', [email], (qerr, qres) => {
       done();
       if (err) {
         console.log(qerr.stack);
         res.json(qerr.message);
       } else {
-        console.log(qres.rows[0]);
-        //res.json(qres.rows[0].email);
+        console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
+            console.log('something blew up at sf login');
             console.error(sfLoginErr);
             res.json(sfLoginErr);
           } else {
+            console.log('sf login successful');
             conn.sobject('Contact').create({
               firstname: qres.rows[0].firstname,
               lastname: qres.rows[0].lastname,
