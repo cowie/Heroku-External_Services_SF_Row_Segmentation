@@ -60,7 +60,7 @@ function searchPGByEmail(req, res) {
       res.status(503).json('Error connecting to Pool');
     }
     console.log('connected to pool');
-    client.query('SELECT * FROM CUSTOMERS WHERE email = $1', [email], (qerr, qres) => {
+    client.query('SELECT * FROM "CustomerMaster" WHERE "Email" = $1', [email], (qerr, qres) => {
       done();
       if (err) {
         console.log(qerr.stack);
@@ -78,12 +78,23 @@ function searchPGByEmail(req, res) {
             res.status(503).json('SF Login Failure');
           } else {
             console.log('sf login successful');
-            conn.sobject('Contact').create({
-              firstname: qres.rows[0].firstname,
-              lastname: qres.rows[0].lastname,
-              email: qres.rows[0].email,
-              phone: qres.rows[0].phone,
-            }, (sfInsErr, sfInsRet) => {
+            const custRec = qres.rows[0];
+            //const creationObject;
+            conn.sobject('Contact').create(
+              /*{
+              firstname: custRec.FirstName,
+              lastname: custRec.LastName,
+              email: custRec.Email,
+              salutation: custRec.Salutation,
+              otherstreet: custRec.OtherStreet,
+              otherstate: custRec.OtherState,
+              otherpostalcode: custRec.OtherPostalCode,
+              custRec.OtherCountry,
+              custRec.OtherCountry,
+              custRec.MailingStreet,
+              custRec.MailingCity
+            }*/
+            custRec, (sfInsErr, sfInsRet) => {
               if (sfInsErr) {
                 console.error(sfInsErr);
                 //res.status(503).send('SF insert failure');
