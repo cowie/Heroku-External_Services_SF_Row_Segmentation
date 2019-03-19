@@ -62,7 +62,7 @@ function searchPGByEmail(req, res) {
     console.log('connected to pool');
     client.query('SELECT * FROM "CustomerMaster" WHERE "Email" = $1', [email], (qerr, qres) => {
       done();
-      if (err) {
+      if (qerr) {
         console.log(qerr.stack);
         res.status(503).json('Error querying Master table');
       } else if (qres.rows.length < 1) {
