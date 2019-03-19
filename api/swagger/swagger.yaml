@@ -7,7 +7,7 @@ basePath: /
 securityDefinitions:
   basicAuth:
     type: basic
-security: 
+security:
   - basicAuth: []
 schemes: 
   - https
@@ -16,8 +16,6 @@ consumes:
 produces:
   - application/json
 paths: 
-  /swagger:
-    x-swagger-pipe: swagger_raw
   /searchEmail:
     x-swagger-router-controller: pg_search
     get: 
@@ -29,7 +27,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: emailAddy
+        - name: emailAddress
           description: Email provided by agent to search master
           in: query
           required: true
@@ -49,10 +47,6 @@ paths:
             $ref: "#/definitions/ErrorResponse"
         503: 
           description: Error connecting to Master database.
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        default:
-          description: Uncaught error. Stuff done gone wrong.
           schema:
             $ref: "#/definitions/ErrorResponse"
 definitions:

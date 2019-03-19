@@ -52,7 +52,7 @@ function searchPGByPhone(req, res) {
 
 function searchPGByEmail(req, res) {
   console.log('entering search module');
-  const email = req.swagger.params.emailAddy.value;
+  const email = req.swagger.params.emailAddress.value;
   pool.connect((err, client, done) => {
     if (err) {
       //throw err;
