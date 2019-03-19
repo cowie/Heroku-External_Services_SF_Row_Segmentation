@@ -3,7 +3,6 @@ info:
   title: Customer Master Example
   description: Simulates an OAS customer master API for feeding a Salesforce cloud instance on the fly via External Services. 
   version: 1.0.0
-host: 127.0.0.1:5000
 basePath: /
 schemes: 
   - https
@@ -31,42 +30,6 @@ paths:
             description: Customer found in master and inserted into Salesforce. Returning SFID.
             schema:
               $ref: "#/definitions/SuccessResponse"
-        401:
-          description: Error authenticating to Salesforce for insert. Customer found successfully.
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        404: 
-          description: Customer not found in database.
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503: 
-          description: Error connecting to Master database.
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        default:
-          description: Uncaught error. Stuff done gone wrong.
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /searchPhoneNumber:
-    x-swagger-router-controller: pg_search
-    get: 
-      operationId: searchPhone
-      description: Searches PG database table for phone number presented, if successful, inserts that contact row into Salesforce database and returns the confirmation, a 15/18 digit Salesforce ID.
-      parameters:
-        - name: phoneNum
-          in: query
-          description: The phone number provided to search
-          required: true
-          type: string
-      responses: 
-        200: 
-            description: Customer found in master and inserted into Salesforce. Returning SFID.
-            schema:
-              type: object
-              properties:
-                SFID: 
-                  type: string
-                  description: The SF Contact ID for the newly inserted record.
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
           schema:
