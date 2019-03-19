@@ -11,7 +11,7 @@ pool.on('error', (err, client) => {
 });
 
 const conn = new jsforce.Connection({
-  loginUrl: 'https://test.salesforce.com',
+  loginUrl: process.env.SALESFORCE_ENDPOINT || 'https://test.salesforce.com',
 });
 
 //todo complete implementation
@@ -86,7 +86,7 @@ function searchPGByEmail(req, res) {
             }, (sfInsErr, sfInsRet) => {
               if (sfInsErr) {
                 console.error(sfInsErr);
-                res.status(503).send('SF insert failure');
+                //res.status(503).send('SF insert failure');
               } else {
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
                 res.json(sfInsRet.id);
