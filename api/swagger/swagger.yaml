@@ -3,8 +3,6 @@ info:
   title: Customer Master Example
   description: Simulates an OAS customer master API for feeding a Salesforce cloud instance on the fly via External Services. 
   version: 1.0.0
-securityDefinitions:
-  
 basePath: /
 schemes: 
   - https
