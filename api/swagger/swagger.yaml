@@ -19,6 +19,10 @@ paths:
       operationId: searchEmail
       summary: Searches for user via email
       description: Searches PG database table for email presented, if successful, inserts that contact row into Salesforce database and returns the confirmation, a 15/18 digit Salesforce ID.
+      consumes: 
+        - text/plain
+      produces:
+        - application/json
       parameters:
         - name: emailAddy
           description: Email provided by agent to search master
@@ -48,8 +52,16 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 definitions:
   SuccessResponse:
-    description: sfID of the new contact
-    type: string
+    required: 
+      - SFID
+    properties:
+      SFID:
+        description: SFID of the new contact
+        type: string
   ErrorResponse:
-    description: error message
-    type: string
+    required: 
+      - Errormsg
+    properties:
+      Errormsg:
+        description: error message
+        type: string
