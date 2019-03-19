@@ -3,6 +3,8 @@ info:
   title: Customer Master Example
   description: Simulates an OAS customer master API for feeding a Salesforce cloud instance on the fly via External Services. 
   version: 1.0.0
+securityDefinitions:
+  
 basePath: /
 schemes: 
   - https
@@ -48,14 +50,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 definitions:
   SuccessResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
+    description: sfID of the new contact
+    type: string
   ErrorResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
+    description: error message
+    type: string
