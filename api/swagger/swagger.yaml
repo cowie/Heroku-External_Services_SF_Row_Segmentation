@@ -12,7 +12,7 @@ produces:
   - application/json
 paths: 
   /swagger:
-    x-swagger-router-controller: swagger_raw
+    x-swagger-pipe: swagger_raw
   /searchEmail:
     x-swagger-router-controller: pg_search
     get: 
