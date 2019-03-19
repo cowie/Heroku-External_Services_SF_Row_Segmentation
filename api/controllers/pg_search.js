@@ -60,7 +60,7 @@ function searchPGByEmail(req, res) {
       res.status(503).json('Error connecting to Pool');
     }
     console.log('connected to pool');
-    client.query('SELECT * FROM "CustomerMaster" WHERE "Email" = $1', [email], (qerr, qres) => {
+    client.query('SELECT * FROM "public"."CustomerMaster" WHERE "Email" = $1', [email], (qerr, qres) => {
       done();
       if (qerr) {
         console.log(qerr.stack);
