@@ -4,6 +4,11 @@ info:
   description: Simulates an OAS customer master API for feeding a Salesforce cloud instance on the fly via External Services. 
   version: 1.0.0
 basePath: /
+securityDefinitions:
+  basicAuth:
+    type: basic
+security: 
+  - basicAuth: []
 schemes: 
   - https
 consumes:
