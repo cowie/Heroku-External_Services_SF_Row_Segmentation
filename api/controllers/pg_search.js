@@ -79,6 +79,8 @@ function searchPGByEmail(req, res) {
           } else {
             console.log('sf login successful');
             const custRec = qres.rows[0];
+            custRec.External_ID__c = custRec.customerID;
+            delete custRec.customerID;
             //const creationObject;
             conn.sobject('Contact').create(
               /*{
