@@ -6,10 +6,6 @@ info:
 basePath: /
 schemes: 
   - https
-consumes:
-  - application/json
-produces:
-  - application/json
 paths: 
   /swagger:
     x-swagger-pipe: swagger_raw
