@@ -17,8 +17,6 @@ paths:
       description: Searches PG database table for email presented, if successful, inserts that contact row into Salesforce database and returns the confirmation, a 15/18 digit Salesforce ID.
       consumes: 
         - text/plain
-      produces:
-        - application/json
       parameters:
         - name: emailAddress
           description: Email provided by agent to search master
