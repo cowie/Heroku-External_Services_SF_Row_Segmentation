@@ -102,7 +102,7 @@ function searchPGByEmail(req, res) {
                 //res.status(503).send('SF insert failure');
               } else {
                 console.log(`Created SF Record id: ${sfInsRet.id}`);
-                res.json(sfInsRet.id);
+                res.send(sfInsRet.id);
               }
             }).catch((error) => {
               res.status(503).json('Error inserting');
