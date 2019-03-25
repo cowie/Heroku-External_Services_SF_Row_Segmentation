@@ -33,7 +33,7 @@ paths:
         200: 
             description: Customer found in master and inserted into Salesforce. Returning SFID.
             schema:
-              $ref: "#/definitions/SuccessResponse"
+              type: string
         401:
           description: Error authenticating to Salesforce for insert. Customer found successfully.
           schema:
