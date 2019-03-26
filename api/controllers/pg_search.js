@@ -16,32 +16,46 @@ const conn = new jsforce.Connection({
 
 //todo complete implementation
 function searchPGByPhone(req, res) {
-  const phoneNum = req.swagger.params.phoneNum.value;
+  console.log('entering search module');
+  const phoneNumber = req.swagger.params.phoneNumber.value;
   pool.connect((err, client, done) => {
-    if (err) throw err;
-    client.query('SELECT * FROM CUSTOMERS WHERE phone = $1', [phoneNum], (qerr, qres) => {
+    if (err) {
+      console.error(err);
+      res.status(503).json('Error connecting to Pool');
+    }
+    console.log('connected to pool');
+    client.query('SELECT * FROM "customerMaster" WHERE "Phone" = $1', [phoneNumber], (qerr, qres) => {
       done();
       if (qerr) {
         console.log(qerr.stack);
-        res.send(200);
+        res.status(503).send('Error querying Master table');
+      } else if (qres.rows.length < 1) {
+        console.log('no records found');
+        res.status(404).send('No records found');
       } else {
-        console.log(qres.rows[0]);
+        console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
+            console.log('something blew up at sf login');
             console.error(sfLoginErr);
-            res.json(sfLoginErr);
+            res.status(503).send('SF Login Failure');
           } else {
-            conn.sobject('Contact').create({
-              firstname: qres.rows[0].firstname,
-              lastname: qres.rows[0].lastname
-            }, (sfInsErr, sfInsRet) => {
-              if (sfInsErr) {
-                console.error(sfInsErr);
-                res.json(sfInsErr);
-              } else {
-                console.log(`Created SF Record id: ${sfInsRet.id}`);
-                res.json(sfInsRet.id);
-              }
+            console.log('sf login successful');
+            const custRec = qres.rows[0];
+            custRec.External_ID__c = custRec.customerID;
+            delete custRec.customerID;
+            //const creationObject;
+            conn.sobject('Contact').create(
+              custRec, (sfInsErr, sfInsRet) => {
+                if (sfInsErr) {
+                  console.error(sfInsErr);
+                  res.status(503).send('SF insert failure');
+                } else {
+                  console.log(`Created SF Record id: ${sfInsRet.id}`);
+                  res.send(sfInsRet.id);
+                }
+              }).catch((error) => {
+              res.status(503).send('Error inserting');
             });
           }
         });
@@ -70,7 +84,6 @@ function searchPGByEmail(req, res) {
         res.status(404).json('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
-        //adding a try catch because jsforce dies if there's an issue
         conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
@@ -96,15 +109,15 @@ function searchPGByEmail(req, res) {
               custRec.MailingStreet,
               custRec.MailingCity
             }*/
-            custRec, (sfInsErr, sfInsRet) => {
-              if (sfInsErr) {
-                console.error(sfInsErr);
+              custRec, (sfInsErr, sfInsRet) => {
+                if (sfInsErr) {
+                  console.error(sfInsErr);
                 //res.status(503).send('SF insert failure');
-              } else {
-                console.log(`Created SF Record id: ${sfInsRet.id}`);
-                res.send(sfInsRet.id);
-              }
-            }).catch((error) => {
+                } else {
+                  console.log(`Created SF Record id: ${sfInsRet.id}`);
+                  res.send(sfInsRet.id);
+                }
+              }).catch((error) => {
               res.status(503).json('Error inserting');
             });
           }

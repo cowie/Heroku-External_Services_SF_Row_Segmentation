@@ -9,6 +9,37 @@ schemes:
 paths: 
   /swagger:
     x-swagger-pipe: swagger_raw
+  /searchPhone:
+    x-swagger-router-controller: pg_search
+    get: 
+      operationId: searchPhone
+      summary: Searches for user via phone
+      description: Searches PG table for phone presented, if successful, inserts that contact row into SF
+      consumes:
+        - text/plain
+      parameters:
+        - name: phoneNumber
+          description: Phone provided by agent to search master
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: Customer found in master and inserted into Salesforce. Returning SFID
+            schema:
+              $ref: "#/definitions/SuccessResponse"
+        401:
+          description: Error authenticating to Salesforce for insert. Customer found successfully.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404: 
+          description: Customer not found in database.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503: 
+          description: Error connecting to Master database.
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /searchEmail:
     x-swagger-router-controller: pg_search
     get: 
