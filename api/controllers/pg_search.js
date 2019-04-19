@@ -11,7 +11,7 @@ pool.on('error', (err, client) => {
 });
 
 const conn = new jsforce.Connection({
-  loginUrl: process.env.SALESFORCE_ENDPOINT || 'https://test.salesforce.com',
+  loginUrl: process.env.SF_ENVIRONMENT == 'production' ? 'https://login.salesforce.com' : 'https://test.salesforce.com',
 });
 
 //todo complete implementation

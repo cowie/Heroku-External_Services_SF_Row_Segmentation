@@ -1,0 +1,25 @@
+{
+    "name": "SF Row Segmentation Master",
+    "description": "Simulates a remote customer master for the SF component of this project to reach out to",
+    "repository": "https://github.com/cowie/Heroku-External_Services_SF_Row_Segmentation",
+    "scripts": {
+        "postdeploy": "node init.js"
+    }, 
+    "env": {
+        "SF_ENVIRONMENT": {
+            "description": "production OR sandbox (tip: scratch org = sandbox)",
+            "value": "sandbox"
+        },
+        "SFDCUSER": {
+            "description": "Salesforce username"
+        },
+        "SFDCPASS": {
+            "description": "Salesforce password(with appended security token probably)"
+        }
+    },
+    "addons":[
+        {
+            "plan": "heroku-postgresql:hobby-dev"
+        }
+    ]
+}

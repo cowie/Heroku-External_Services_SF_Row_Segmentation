@@ -1,10 +1,10 @@
 {
-  "name": "swaggerPGSearchAndInsert",
-  "version": "0.0.1",
+  "name": "SF Row Segmentation Master",
+  "version": "0.1.2",
   "private": true,
-  "description": "New Swagger API Project",
+  "description": "Simulates a remote customer master for the SF component of this project to reach out to",
   "keywords": [],
-  "author": "",
+  "author": "CDG",
   "license": "",
   "main": "app.js",
   "dependencies": {
