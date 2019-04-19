@@ -1,5 +1,7 @@
 # External Services Example Customer Master
 
+Go to https://github.com/cowie/SFDC-External_Services_SF_Row_Segmentation instead of this one. It's like more there over there.
+
 ## Description
 Hi there. This is the Heroku side of a buildout for a service to be consumed by Salesforce's External Services. 
 
