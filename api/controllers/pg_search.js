@@ -21,24 +21,24 @@ function searchPGByPhone(req, res) {
   pool.connect((err, client, done) => {
     if (err) {
       console.error(err);
-      res.status(503).json('Error connecting to Pool');
+      res.status(503);//.json('Error connecting to Pool');
     }
     console.log('connected to pool');
     client.query('SELECT * FROM "customerMaster" WHERE "Phone" = $1', [phoneNumber], (qerr, qres) => {
       done();
       if (qerr) {
         console.log(qerr.stack);
-        res.status(503).send('Error querying Master table');
+        res.status(503);//.send('Error querying Master table');
       } else if (qres.rows.length < 1) {
         console.log('no records found');
-        res.status(404).send('No records found');
+        res.status(404);//.send('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SF_USER_NAME, process.env.SF_USER_PW, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
             console.error(sfLoginErr);
-            res.status(503).send('SF Login Failure');
+            res.status(503);//.send('SF Login Failure');
           } else {
             console.log('sf login successful');
             const custRec = qres.rows[0];
@@ -49,13 +49,13 @@ function searchPGByPhone(req, res) {
               custRec, (sfInsErr, sfInsRet) => {
                 if (sfInsErr) {
                   console.error(sfInsErr);
-                  res.status(503).send('SF insert failure');
+                  res.status(503);//.send('SF insert failure');
                 } else {
                   console.log(`Created SF Record id: ${sfInsRet.id}`);
                   res.send(sfInsRet.id);
                 }
               }).catch((error) => {
-              res.status(503).send('Error inserting');
+              res.status(503);//.send('Error inserting');
             });
           }
         });
@@ -71,24 +71,24 @@ function searchPGByEmail(req, res) {
     if (err) {
       //throw err;
       console.error(err);
-      res.status(503).json('Error connecting to Pool');
+      res.status(503);//.json('Error connecting to Pool');
     }
     console.log('connected to pool');
     client.query('SELECT * FROM "customerMaster" WHERE "Email" = $1', [email], (qerr, qres) => {
       done();
       if (qerr) {
         console.log(qerr.stack);
-        res.status(503).json('Error querying Master table');
+        res.status(503);//.json('Error querying Master table');
       } else if (qres.rows.length < 1) {
         console.log('no records found');
-        res.status(404).json('No records found');
+        res.status(404);//.json('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SF_USER_NAME, process.env.SF_USER_PW, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
             console.error(sfLoginErr);
-            res.status(503).json('SF Login Failure');
+            res.status(503);//.json('SF Login Failure');
           } else {
             console.log('sf login successful');
             const custRec = qres.rows[0];
@@ -118,7 +118,7 @@ function searchPGByEmail(req, res) {
                   res.send(sfInsRet.id);
                 }
               }).catch((error) => {
-              res.status(503).json('Error inserting');
+              res.status(503);//.json('Error inserting');
             });
           }
         });
