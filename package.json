@@ -1,5 +1,5 @@
 {
-  "name": "SF Row Segmentation Master",
+  "name": "SF_Row_Segmentation_Master",
   "version": "0.1.2",
   "private": true,
   "description": "Simulates a remote customer master for the SF component of this project to reach out to",

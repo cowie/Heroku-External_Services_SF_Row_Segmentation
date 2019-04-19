@@ -1,5 +1,5 @@
 {
-    "name": "SF Row Segmentation Master",
+    "name": "SF_Row_Segmentation_Master",
     "description": "Simulates a remote customer master for the SF component of this project to reach out to",
     "repository": "https://github.com/cowie/Heroku-External_Services_SF_Row_Segmentation",
     "scripts": {
