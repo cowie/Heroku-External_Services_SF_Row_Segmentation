@@ -80,7 +80,7 @@ function searchPGByEmail(req, res) {
         res.status(503).json('Error querying Master table');
       } else if (qres.rows.length < 1) {
         console.log('no records found');
-        res.status(404).json('No records found');
+        res.status(404).send('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
         conn.login(process.env.SF_USER_NAME, process.env.SF_USER_PW, (sfLoginErr, sfLoginRes) => {
