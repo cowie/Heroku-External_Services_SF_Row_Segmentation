@@ -10,10 +10,10 @@
             "description": "production OR sandbox (tip: scratch org = sandbox)",
             "value": "sandbox"
         },
-        "SFDCUSER": {
+        "SF_USER_NAME": {
             "description": "Salesforce username"
         },
-        "SFDCPASS": {
+        "SF_USER_PW": {
             "description": "Salesforce password(with appended security token probably)"
         }
     },
