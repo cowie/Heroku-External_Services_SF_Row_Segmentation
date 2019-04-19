@@ -1,7 +1,5 @@
 # External Services Example Customer Master
 
-WIP: Because I'm about to swap laptops lol
-
 ## Description
 Hi there. This is the Heroku side of a buildout for a service to be consumed by Salesforce's External Services. 
 
@@ -23,10 +21,9 @@ Create the Salesforce Org.
 
 Install the associated package - here - into your Salesforce org so the schema matches what is in PG. OR git clone this sucker and change the PG schema around.
 
-Use this button to launch the mofo, and fill out SFDCUSER and SFDCPASS appropriately. Don't forget: Pass also may require the Security Token!
+Use this button [![Deploy](https://heroku.com/deploy?template=https://github.com/cowie/Heroku-External_Services_SF_Row_Segmentation)] to launch the mofo, and fill out the environment variables appropriately. Don't forget: Your password probably needs your security token too!
 
 Go into your salesforce org and correct the Named Credential to point at your Heroku instance.
-
 
 ## Resources
 

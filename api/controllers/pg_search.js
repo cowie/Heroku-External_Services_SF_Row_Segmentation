@@ -34,7 +34,7 @@ function searchPGByPhone(req, res) {
         res.status(404).send('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
-        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+        conn.login(process.env.SF_USER_NAME, process.env.SF_USER_PW, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
             console.error(sfLoginErr);
@@ -84,7 +84,7 @@ function searchPGByEmail(req, res) {
         res.status(404).json('No records found');
       } else {
         console.log(`query successful: ${qres.rows[0]}`);
-        conn.login(process.env.SFDCUSER, process.env.SFDCPASS, (sfLoginErr, sfLoginRes) => {
+        conn.login(process.env.SF_USER_NAME, process.env.SF_USER_PW, (sfLoginErr, sfLoginRes) => {
           if (sfLoginErr) {
             console.log('something blew up at sf login');
             console.error(sfLoginErr);
