@@ -1,6 +1,6 @@
 # External Services Example Customer Master
 
-Go to https://github.com/cowie/SFDC-External_Services_SF_Row_Segmentation instead of this one. It's like more there over there.
+Go to [here](https://github.com/cowie/SFDC-External_Services_SF_Row_Segmentation) instead of this one. It's like more there over there. This is kinda shoddy, but it works so there's that.
 
 ## Description
 Hi there. This is the Heroku side of a buildout for a service to be consumed by Salesforce's External Services. 
@@ -21,9 +21,9 @@ You need a Salesforce org for this. Without one you SOL, since that's half the d
 
 Create the Salesforce Org. 
 
-Install the associated package - here - into your Salesforce org so the schema matches what is in PG. OR git clone this sucker and change the PG schema around.
+Install the associated package - [here](https://github.com/cowie/SFDC-External_Services_SF_Row_Segmentation) - into your Salesforce org so the schema matches what is in PG. OR git clone this sucker and change the PG schema around.
 
-Use this button [![Deploy](https://heroku.com/deploy?template=https://github.com/cowie/Heroku-External_Services_SF_Row_Segmentation)] to launch the mofo, and fill out the environment variables appropriately. Don't forget: Your password probably needs your security token too!
+Use this button [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cowie/Heroku-External_Services_SF_Row_Segmentation)] to launch the mofo, and fill out the environment variables appropriately. Don't forget: Your password probably needs your security token too!
 
 Go into your salesforce org and correct the Named Credential to point at your Heroku instance.
 
